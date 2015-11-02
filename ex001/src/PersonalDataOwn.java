@@ -36,9 +36,7 @@ class PersonalDataOwn
             result.add(node);
 
             System.out.println("\n\rAdd another movie (y/n)?");
-            String answer = in.next();
-
-            if (!answer.equals("y")) {
+            if (!in.next().equals("y")) {
                 another = false;
             }
         }
