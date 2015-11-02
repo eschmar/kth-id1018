@@ -1,13 +1,14 @@
 # KTH ID1018
+OU = Mandatory Exercise, EU = Extra Exercise
 
 - [x] Exercise 001
 - [ ] Exercise 002
-- [ ] (OU) Mandatory Exercise 001
-- [ ] (OU) Mandatory Exercise 002
-- [ ] (OU) Mandatory Exercise 003
-- [ ] (OU) Mandatory Exercise 004
-- [ ] (OU) Mandatory Exercise 005
-- [ ] (EU) Extra Exercise 001
-- [ ] (EU) Extra Exercise 002
-- [ ] (EU) Extra Exercise 003
-- [ ] (EU) Extra Exercise 004
+- [ ] OU 001
+- [ ] OU 002
+- [ ] OU 003
+- [ ] OU 004
+- [ ] OU 005
+- [ ] EU 001
+- [ ] EU 002
+- [ ] EU 003
+- [ ] EU 004
