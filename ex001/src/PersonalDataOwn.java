@@ -13,13 +13,9 @@ class PersonalDataOwn
 
         Scanner in = new Scanner(System.in);
         in.useLocale(java.util.Locale.US);
-        String[] dataPoints = {"Title", "Year", "Genre"};
         ArrayList<String[]> result = new ArrayList<String[]>();
 
-        String title;
-        String year;
-        String genre;
-
+        String title, year, genre;
         boolean another = true;
 
         while (another){
