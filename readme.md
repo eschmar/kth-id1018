@@ -3,7 +3,7 @@ OU = Mandatory Exercise, EU = Extra Exercise
 
 - [x] Exercise 001
 - [ ] Exercise 002
-- [ ] OU 001
+- [x] OU 001
 - [ ] OU 002
 - [ ] OU 003
 - [ ] OU 004

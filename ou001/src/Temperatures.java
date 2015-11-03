@@ -49,27 +49,58 @@ public class Temperatures {
         double[] sumT = new double[nofWeeks + 1];
         double[] avgT = new double[nofWeeks + 1];
 
+        // the least, greatest and average temperature - whole period
+        double minTemp = t[1][1];
+        double maxTemp = t[1][1];
+
         // compute and store the least, greatest and average
         // temperature for each week.
-        // *** TODO
+        for (int week = 1; week <= nofWeeks; week++) {
+            double min = t[week][1], max = t[week][1], sum = 0, avg;
+            for (int reading = 1; reading <= nofMeasurementsPerWeek; reading++) {
+                double currentReading = t[week][reading];
+                sum += currentReading;
+
+                if (currentReading < min) {
+                    min = currentReading;
+                }
+
+                if (currentReading > max) {
+                    max = currentReading;
+                }
+            }
+
+            minT[week] = min;
+            maxT[week] = max;
+            sumT[week] = sum;
+            avgT[week] = sum / nofMeasurementsPerWeek;
+
+            // compte and store the least and greatest
+            // temperature for the whole period
+            if (min < minTemp) { minTemp = min; }
+            if (max > maxTemp) { maxTemp = max; }
+        }
 
         // show the least, greatest and average temperature for
         // each week
-        // *** TODO
+        System.out.println("#, minT, maxT, avgT");
+        for (int week = 1; week <= nofWeeks; week++) {
+            System.out.println(week + ", " + minT[week] + ", " + maxT[week] + ", " + avgT[week]);
+        }
 
-        // the least, greatest and average temperature - whole period
-        double minTemp = minT[1];
-        double maxTemp = maxT[1];
-        double sumTemp = sumT[1];
+        // compte and store the average temperature for the whole period
+        double sumTemp = 0;
         double avgTemp = 0;
+        for (double current : avgT) {
+            sumTemp += current;
+        }
 
-        // compte and store the least, greatest and average
-        // temperature for the whole period
-        // *** TODO
+        avgTemp = sumTemp / nofWeeks;
 
         // show the least, greatest and average temperature for
         // the whole period
-        // *** TODO
+        System.out.println("\nWhole period [least, greatest, average]:");
+        System.out.println(minTemp + ", " + maxTemp + ", " + avgTemp);
 
 
     }
