@@ -21,10 +21,9 @@ public class TriangleAndItsCircles {
         System.out.print("Lenght of side c: ");
         double c = in.nextDouble();
 
-        Triangle t = new Triangle();
         //System.out.print("\nThe area of the triangle is " + t.area(a, b, c) + ".");
-        System.out.print("\nThe radius of the circumcircle is " + t.circumcircleRadius(a, b, c) + ".");
-        System.out.print("\nThe radius of the incircle is " + t.incircleRadius(a, b, c) + ".");
+        System.out.print("\nThe radius of the circumcircle is " + Triangle.circumcircleRadius(a, b, c) + ".");
+        System.out.print("\nThe radius of the incircle is " + Triangle.incircleRadius(a, b, c) + ".");
 
     }
 }
