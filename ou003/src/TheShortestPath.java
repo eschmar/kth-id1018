@@ -2,20 +2,6 @@
  * Created by eschmar on 10/11/15.
  */
 public class TheShortestPath {
-    public class Tuple<X, Y> {
-        public final X x;
-        public final Y y;
-        public Tuple(X x, Y y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public String toString() {
-            return "(" + x + "," + y + ")";
-        }
-    }
-
     /**
      * The method intermediateStations returns a vector of the
      * intermediate stations that are on the shortest path.
