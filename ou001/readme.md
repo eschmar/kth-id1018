@@ -1,2 +1,2 @@
 # Logic and vectors
-Mandatory Excercise 1
+Mandatory Exercise 1
