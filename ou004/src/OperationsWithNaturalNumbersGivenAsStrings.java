@@ -20,7 +20,8 @@ public class OperationsWithNaturalNumbersGivenAsStrings {
         show(tal1, tal2, sum, '+');
 
         // subtract the numbers and show the result
-        // TODO
+        String difference = subtract(tal1, tal2);
+        show(tal1, tal2, difference, '-');
     }
 
     /**
@@ -32,8 +33,27 @@ public class OperationsWithNaturalNumbersGivenAsStrings {
      * @return String
      */
     public static String add(String num1, String num2) {
-        // TODO
-        return "";
+        //String resultCheck = "" + (Double.parseDouble(num1) + Double.parseDouble(num2));
+
+        String[] a1 = num1.split("");
+        String[] a2 = num2.split("");
+
+        int length = Math.max(a1.length, a2.length);
+        String[] result = new String[length];
+        int cOut = 0;
+
+        for (int i = 0; i < length; i++) {
+            int i1 = a1.length - i -1;
+            int i2 = a2.length - i -1;
+
+            int s1 = i1 >= 0 ? Integer.parseInt(a1[i1]) : 0;
+            int s2 = i2 >= 0 ? Integer.parseInt(a2[i2]) : 0;
+
+            result[length - i - 1] = Integer.toString((s1 + s2 + cOut) % 10);
+            cOut = Double.valueOf(Math.floor((s1 + s2 + cOut) / 10)).intValue();
+        }
+
+        return String.join("", result);
     }
 
     /**
@@ -46,8 +66,33 @@ public class OperationsWithNaturalNumbersGivenAsStrings {
      * @return String
      */
     public static String subtract(String num1, String num2) {
-        // TODO
-        return "";
+        //String resultCheck = "" + (Double.parseDouble(num1) - Double.parseDouble(num2));
+
+        String[] a1 = num1.split("");
+        String[] a2 = num2.split("");
+
+        int length = Math.max(a1.length, a2.length);
+        String[] result = new String[length];
+        int cOut = 0;
+
+        for (int i = 0; i < length; i++) {
+            int i1 = a1.length - i -1;
+            int i2 = a2.length - i -1;
+
+            int s1 = i1 >= 0 ? Integer.parseInt(a1[i1]) : 0;
+            int s2 = i2 >= 0 ? Integer.parseInt(a2[i2]) : 0;
+
+            int temp = s1 - s2 + cOut;
+            if (temp < 0) {
+                result[length - i - 1] = Integer.toString(temp + 10);
+                cOut = -1;
+            }else {
+                result[length - i - 1] = Integer.toString(temp);
+                cOut = 0;
+            }
+        }
+
+        return String.join("", result);
     }
 
     /**
