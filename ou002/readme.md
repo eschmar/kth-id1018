@@ -1,2 +1,2 @@
 # Methods and class libraries
-Mandatory excerise 2
+Mandatory exercise 2
