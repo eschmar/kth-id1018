@@ -3,7 +3,7 @@ import java.util.Arrays;
 /**
  * Created by eschmar on 10/11/15.
  */
-public class Polyline {
+public class Polyline1 {
     private Point[] vertices;
     private String colour = "black";
     private int width = 1;
@@ -11,7 +11,7 @@ public class Polyline {
     /**
      * Empty constructor.
      */
-    public Polyline() {
+    public Polyline1() {
         this.vertices = new Point[0];
     }
 
@@ -19,7 +19,7 @@ public class Polyline {
      * Initialise the polyline with vertices.
      * @param vertices
      */
-    public Polyline(Point[] vertices) {
+    public Polyline1(Point[] vertices) {
         this.vertices = new Point[vertices.length];
         for (int i = 0; i < vertices.length; i++) {
             this.vertices[i] = new Point(vertices[i]);
@@ -32,14 +32,7 @@ public class Polyline {
     }
 
     public Point[] getVertices() {
-        return Arrays.copyOf(this.vertices, this.vertices.length);
-//        Point[] h = new Point[this.vertices.length + 1];
-//        int i = 0;
-//        for (i = 0; i < this.vertices.length; i++) {
-//            h[i] = this.vertices[i];
-//        }
-//
-//        return h;
+        return vertices;
     }
 
     public String getColour() {
