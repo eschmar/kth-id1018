@@ -42,5 +42,13 @@ public class PolylineTest {
 
         l2.remove("C");
         out.println(l2);
+
+        // iterable
+        out.println("\nITERABLE:");
+        Polyline.PolylineIterator iterator = l2.new PolylineIterator();
+        while (iterator.hasVertex()) {
+            out.println(iterator.vertex());
+            iterator.advance();
+        }
     }
 }

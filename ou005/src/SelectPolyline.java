@@ -26,14 +26,14 @@ public class SelectPolyline {
         // determine the shortest yellow polyline
         Polyline shortestPolyline = null;
         for (Polyline pl : polylines) {
-            if (pl.getColour() == "yellow" && (shortestPolyline == null || shortestPolyline.length() < pl.length())) {
+            if (pl.getColour() == "yellow" && (shortestPolyline == null || shortestPolyline.distance() < pl.distance())) {
                 shortestPolyline = pl;
             }
         }
 
         // show the selected polyline
         if (shortestPolyline != null) {
-            out.println("The shortest yellow line with length " + shortestPolyline.length() + " is:");
+            out.println("The shortest yellow line with length " + shortestPolyline.distance() + " is:");
             out.println(shortestPolyline);
         }else {
             out.println("Could not find a yellow line.");
