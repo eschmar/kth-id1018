@@ -59,11 +59,16 @@ public class Polyline {
     }
 
     /**
-     * Returns the amount of vertices.
-     * @return
+     * Returns the length of the line.
+     * @return double
      */
     public double length() {
-        return this.vertices.length;
+        double sum = 0;
+        for (int i = 0; i < this.vertices.length-1; i++) {
+            sum += this.vertices[i].distance(this.vertices[i+1]);
+        }
+
+        return sum;
     }
 
     /**

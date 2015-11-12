@@ -1,3 +1,4 @@
+import java.io.PrintWriter;
 import java.util.Random;
 
 /**
@@ -8,6 +9,8 @@ public class SelectPolyline {
     public static final int NOF_POLYLINES = 10;
 
     public static void main(String[] args) {
+        PrintWriter out = new PrintWriter(System.out, true);
+
         // create a random number of polylines
         Polyline[] polylines = new Polyline[NOF_POLYLINES];
         for (int i = 0; i < NOF_POLYLINES; i++) {
@@ -15,10 +18,26 @@ public class SelectPolyline {
         }
 
         // show the polylines
+        for (int i = 0; i < NOF_POLYLINES; i++) {
+            out.println("Polyline " + (i+1) + ":");
+            out.println(polylines[i] + "\n");
+        }
 
         // determine the shortest yellow polyline
+        Polyline shortestPolyline = null;
+        for (Polyline pl : polylines) {
+            if (pl.getColour() == "yellow" && (shortestPolyline == null || shortestPolyline.length() < pl.length())) {
+                shortestPolyline = pl;
+            }
+        }
 
         // show the selected polyline
+        if (shortestPolyline != null) {
+            out.println("The shortest yellow line with length " + shortestPolyline.length() + " is:");
+            out.println(shortestPolyline);
+        }else {
+            out.println("Could not find a yellow line.");
+        }
     }
 
     /**
@@ -53,9 +72,20 @@ public class SelectPolyline {
         Point chosenPoint = null;
         char chosenChar = 0;
         while (nofSelectedVertices < nofVertices) {
+            Point temp = randomPoint();
+            int intName = temp.getName().charAt(0) - 'A';
 
+            if (!selectedNames[intName]) {
+                selectedNames[intName] = true;
+                polyline.addLast(temp);
+                nofSelectedVertices++;
+            }
         }
 
         // assign a colour.
+        String[] colours = {"blue", "red", "yellow"};
+        polyline.setColour(colours[rand.nextInt(3)]);
+
+        return polyline;
     }
 }
