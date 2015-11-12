@@ -38,7 +38,7 @@ public class OperationsWithNaturalNumbersGivenAsStrings {
         String[] a1 = num1.split("");
         String[] a2 = num2.split("");
 
-        int length = Math.max(a1.length, a2.length);
+        int length = Math.max(a1.length, a2.length) + 1;
         String[] result = new String[length];
         int cOut = 0;
 
