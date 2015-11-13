@@ -17,17 +17,15 @@ public class TheShortestPath {
 
         // get the closest station in zone 2
         for (int i = 0; i < a.length; i++) {
-            if (a[i] < a[result[0]]) {
-                result[0] = i;
-            }
-        }
+            double temp = a[i] + b[result[0]][0] + c[0];
 
-        double temp = b[result[0]][0] + c[0];
-        // get the closest station in zone 3
-        for (int i = 0; i < b[result[0]].length; i++) {
-            temp = b[result[0]][i] + c[i];
-            if (temp < (b[result[0]][result[1]] + c[result[1]])) {
-                result[1] = i;
+            // get the closest station in zone 3
+            for (int j = 0; j < b[result[0]].length; j++) {
+                temp = a[i] + b[i][j] + c[j];
+                if (temp < (a[result[0]] + b[result[0]][result[1]] + c[result[1]])) {
+                    result[0] = i;
+                    result[1] = j;
+                }
             }
         }
 
