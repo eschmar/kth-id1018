@@ -17,7 +17,7 @@ public class TheShortestPath {
 
         // get the closest station in zone 2
         for (int i = 0; i < a.length; i++) {
-            double temp = a[i] + b[result[0]][0] + c[0];
+            double temp;
 
             // get the closest station in zone 3
             for (int j = 0; j < b[result[0]].length; j++) {
