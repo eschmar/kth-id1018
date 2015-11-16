@@ -1,20 +1,29 @@
 import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
  * Created by eschmar on 16/11/15.
  */
 public class LeastInteger {
+    public static final Random rand = new Random();
 
     public static void main(String[] args) {
         System.out.println("THE LEAST INTEGER\n");
 
-        int[] test = {4,6,7,1,3,5,8,8,4,3,5};
-        System.out.println(java.util.Arrays.toString(test));
+        // generate test input sequence
+        int length = rand.nextInt(9999);
+        length = length < 0 ? length*(-1) : length;
+        int[] testSequence = new int[length];
+        for (int i = 0; i < length; i++) {
+            testSequence[i] = rand.nextInt();
+        }
+
+        System.out.println("INPUT\n");
+        System.out.println(java.util.Arrays.toString(testSequence));
 
         System.out.println("\nRESULT:");
-        System.out.println(min(test));
-        //System.out.println("\n");
+        System.out.println(min(testSequence));
     }
 
     /**
@@ -31,7 +40,7 @@ public class LeastInteger {
         }
 
         // is used in trace printing 2:
-        // int nofIters = 1;
+        int nofIters = 1;
 
         int[] sequence = elements;
         int nofPairs = sequence.length / 2;
@@ -68,11 +77,10 @@ public class LeastInteger {
 
             // Trace printing 2 - to terminate the loop preemptively
             // (to be able to see what happens initially)
-//            if (nofIters++ == 10) {
-//                System.exit(0);
-//            }
-
-            //
+            if (nofIters++ == 10) {
+                System.out.println("EXIT.");
+                //System.exit(0);
+            }
         }
 
         return sequence[0];
