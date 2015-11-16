@@ -14,16 +14,7 @@ public class LeastInteger {
 
         System.out.println("\nRESULT:");
         System.out.println(min(test));
-
-        // input tools
-        //Scanner in = new Scanner(System.in);
-        //in.useLocale(Locale.US);
-
-        // read in all inputs
-        //System.out.print("Amount of stations in zone 2: ");
-        //int m = in.nextInt();
-
-        System.out.println("\n");
+        //System.out.println("\n");
     }
 
     /**
@@ -46,11 +37,13 @@ public class LeastInteger {
         int nofPairs = sequence.length / 2;
         int nofUnpairedElements = sequence.length % 2;
         int nofPossibleElements = nofPairs + nofUnpairedElements;
-        int[] partialSeq = new int[nofPossibleElements];
+        int[] partialSeq;
         int i = 0;
         int j = 0;
 
         while (sequence.length > 1) {
+            partialSeq = new int[nofPossibleElements];
+
             //extract a partial sequence of possible elements
             i = 0;
             j = 0;
@@ -71,7 +64,7 @@ public class LeastInteger {
             nofPossibleElements = nofPairs + nofUnpairedElements;
 
             // Trace printing 1 - to follow the sequence
-            // System.out.println(java.util.Arrays.toString(sequence);
+            System.out.println(java.util.Arrays.toString(sequence));
 
             // Trace printing 2 - to terminate the loop preemptively
             // (to be able to see what happens initially)
