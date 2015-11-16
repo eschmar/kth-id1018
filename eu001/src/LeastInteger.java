@@ -1,7 +1,30 @@
+import java.util.Locale;
+import java.util.Scanner;
+
 /**
  * Created by eschmar on 16/11/15.
  */
 public class LeastInteger {
+
+    public static void main(String[] args) {
+        System.out.println("THE LEAST INTEGER\n");
+
+        int[] test = {4,6,7,1,3,5,8,8,4,3,5};
+        System.out.println(java.util.Arrays.toString(test));
+
+        System.out.println("\nRESULT:");
+        System.out.println(min(test));
+
+        // input tools
+        //Scanner in = new Scanner(System.in);
+        //in.useLocale(Locale.US);
+
+        // read in all inputs
+        //System.out.print("Amount of stations in zone 2: ");
+        //int m = in.nextInt();
+
+        System.out.println("\n");
+    }
 
     /**
      * The min method returns the least element in a sequential
@@ -33,7 +56,7 @@ public class LeastInteger {
             j = 0;
 
             while (j < nofPairs) {
-                partialSeq[j++] = (sequence[i] < sequence[i + 1]) ? sequence[i] : sequence[i+1];
+                partialSeq[j++] = (sequence[i] < sequence[i + 1]) ? sequence[i] : sequence[i + 1];
                 i += 2;
             }
 
