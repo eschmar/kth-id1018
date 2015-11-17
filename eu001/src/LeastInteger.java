@@ -12,7 +12,7 @@ public class LeastInteger {
         System.out.println("THE LEAST INTEGER\n");
 
         // generate test input sequence
-        int length = rand.nextInt(9999);
+        int length = rand.nextInt(999);
         length = length < 0 ? length*(-1) : length;
         int[] testSequence = new int[length];
         for (int i = 0; i < length; i++) {
@@ -46,12 +46,13 @@ public class LeastInteger {
         int nofPairs = sequence.length / 2;
         int nofUnpairedElements = sequence.length % 2;
         int nofPossibleElements = nofPairs + nofUnpairedElements;
-        int[] partialSeq;
+        int[] partialSeq = new int[nofPossibleElements];
         int i = 0;
         int j = 0;
 
-        while (sequence.length > 1) {
-            partialSeq = new int[nofPossibleElements];
+        while (nofPossibleElements > 1) {
+            // easy solution
+            //partialSeq = new int[nofPossibleElements];
 
             //extract a partial sequence of possible elements
             i = 0;
@@ -63,7 +64,7 @@ public class LeastInteger {
             }
 
             if (nofUnpairedElements == 1) {
-                partialSeq[j] = sequence[sequence.length - 1];
+                partialSeq[j] = sequence[nofPossibleElements - 1];
             }
 
             // now turn to the partial sequence
