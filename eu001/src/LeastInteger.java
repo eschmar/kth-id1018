@@ -24,6 +24,9 @@ public class LeastInteger {
 
         System.out.println("\nRESULT:");
         System.out.println(min(testSequence));
+
+        System.out.println("\nRESULT USING UPDATE STRATEGY:");
+        System.out.println(minByUpdate(testSequence));
     }
 
     /**
@@ -86,4 +89,26 @@ public class LeastInteger {
 
         return sequence[0];
     }
+
+    /**
+     * The min method returns the least element in a sequential
+     * collection. If the collection is empty, an
+     * IllegalArgumentException is thrown.
+     * @param elements
+     * @return int[]
+     * @throws IllegalArgumentException
+     */
+    public static int minByUpdate(int[] elements) throws IllegalArgumentException {
+        if (elements.length == 0) {
+            throw new IllegalArgumentException("empty collection");
+        }
+
+        int result = elements[0];
+        for (int current : elements) {
+            result = result > current ? current : result;
+        }
+
+        return result;
+    }
+
 }
