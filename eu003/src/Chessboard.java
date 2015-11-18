@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -8,8 +9,6 @@ public class Chessboard {
         System.out.println("CHESSBOARD\n");
         Chessboard board = new Chessboard();
         board.run(args);
-
-        System.out.println(board);
     }
 
     public void run(String[] args) {
@@ -18,10 +17,83 @@ public class Chessboard {
 
         try {
             pawn.moveTo('a', column);
+            pawn.markReachableFields();
+            log("Pawn:");
         }catch (Exception e) {
-            //TODO
             System.out.println(e.getMessage());
         }
+
+        pawn.unmarkReachableFields();
+
+        Rook rook = new Rook('b');
+        try {
+            rook.moveTo('c', column);
+            rook.markReachableFields();
+            log("Rook:");
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        rook.unmarkReachableFields();
+
+        Knight knight = new Knight('w');
+        column = 1;
+        try {
+            knight.moveTo('d', column);
+            knight.markReachableFields();
+            log("Knight:");
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        knight.unmarkReachableFields();
+
+        Bishop bishop = new Bishop('w');
+        column = 4;
+        try {
+            bishop.moveTo('g', column);
+            bishop.markReachableFields();
+            log("Bishop:");
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        bishop.unmarkReachableFields();
+
+        Queen queen = new Queen('w');
+        column = 4;
+        try {
+            queen.moveTo('a', column);
+            queen.markReachableFields();
+            log("Queen:");
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        queen.unmarkReachableFields();
+
+        King king = new King('w');
+        column = 6;
+        try {
+            king.moveTo('f', column);
+            king.markReachableFields();
+            log("King:");
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        king.unmarkReachableFields();
+
+        log("Final:");
+    }
+
+    public void log() {
+        System.out.println(this);
+    }
+
+    public void log(String msg) {
+        System.out.println(msg);
+        log();
     }
 
     public static class Field {
@@ -161,10 +233,21 @@ public class Chessboard {
             this.column = -1;
         }
 
+        public int getRowIndex(char row) {
+            return row - FIRST_ROW;
+        }
+
+        public int getColIndex(byte column) {
+            return column - FIRST_COLUMN;
+        }
+
         public abstract void markReachableFields();
         public abstract void unmarkReachableFields();
     }
 
+    /**
+     * Pawn class
+     */
     public class Pawn extends Chesspiece {
         public Pawn(char color) {
             super(color, 'P');
@@ -189,9 +272,249 @@ public class Chessboard {
         }
     }
 
-    public class Rook extends Chesspiece {}
-    public class Knight extends Chesspiece {}
-    public class Bishop extends Chesspiece {}
-    public class Queen extends Chesspiece {}
-    public class King extends Chesspiece {}
+    /**
+     * Rook/Tower class
+     */
+    public class Rook extends Chesspiece {
+        public Rook(char color) {
+            super(color, 'R');
+        }
+
+        public void markReachableFields() {
+            int r = row - FIRST_ROW;
+            int c = column - FIRST_COLUMN;
+
+            for (Field[] row : Chessboard.this.fields) {
+                row[c].mark();
+            }
+
+            for (Field column : Chessboard.this.fields[r]) {
+                column.mark();
+            }
+        }
+
+        public void unmarkReachableFields() {
+            int r = row - FIRST_ROW;
+            int c = column - FIRST_COLUMN;
+
+            for (Field[] row : Chessboard.this.fields) {
+                row[c].unmark();
+            }
+
+            for (Field column : Chessboard.this.fields[r]) {
+                column.unmark();
+            }
+        }
+    }
+
+    public class Tuple {
+        public final char x;
+        public final byte y;
+        public Tuple(char x, byte y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    /**
+     * Knight class
+     */
+    public class Knight extends Chesspiece {
+        public Knight(char color) {
+            super(color, 'N');
+        }
+
+        private Tuple[] getReachableCoords() {
+            char rTemp;
+            Tuple[] coords = new Tuple[8];
+
+            rTemp = (char)(this.row + 2);
+            coords[0] = new Tuple(rTemp, (byte)(this.column - 1));
+            coords[1] = new Tuple(rTemp, (byte)(this.column + 1));
+
+            rTemp = (char)(this.row + 1);
+            coords[2] = new Tuple(rTemp, (byte)(this.column - 2));
+            coords[3] = new Tuple(rTemp, (byte)(this.column + 2));
+
+            rTemp = (char)(this.row - 1);
+            coords[4] = new Tuple(rTemp, (byte)(this.column - 2));
+            coords[5] = new Tuple(rTemp, (byte)(this.column + 2));
+
+            rTemp = (char)(this.row - 2);
+            coords[6] = new Tuple(rTemp, (byte)(this.column - 1));
+            coords[7] = new Tuple(rTemp, (byte)(this.column + 1));
+
+            return coords;
+        }
+
+        public void markReachableFields() {
+            Tuple[] coords = getReachableCoords();
+
+            for (Tuple coord : coords) {
+                if (Chessboard.this.isValidField(coord.x, coord.y)) {
+                    Chessboard.this.fields[getRowIndex(coord.x)][getColIndex(coord.y)].mark();
+                }
+            }
+        }
+
+        public void unmarkReachableFields() {
+            Tuple[] coords = getReachableCoords();
+
+            for (Tuple coord : coords) {
+                if (Chessboard.this.isValidField(coord.x, coord.y)) {
+                    Chessboard.this.fields[getRowIndex(coord.x)][getColIndex(coord.y)].unmark();
+                }
+            }
+        }
+    }
+
+    /**
+     * Bishop class
+     */
+    public class Bishop extends Chesspiece {
+        public Bishop(char color) {
+            super(color, 'B');
+        }
+
+        private ArrayList<Tuple> getReachableCoords() {
+            ArrayList<Tuple> coords = new ArrayList<Tuple>();
+
+            for (int i = 1; i <= NUMBER_OF_COLUMNS - this.column; i++) {
+                coords.add(new Tuple((char)(this.row + i), (byte)(this.column - i)));
+                coords.add(new Tuple((char)(this.row + i), (byte)(this.column + i)));
+            }
+
+            for (int i = 1; i <= this.column + 1; i++) {
+                coords.add(new Tuple((char)(this.row - i), (byte)(this.column - i)));
+                coords.add(new Tuple((char)(this.row - i), (byte)(this.column + i)));
+            }
+
+            return coords;
+        }
+
+        public void markReachableFields() {
+            ArrayList<Tuple> coords = getReachableCoords();
+
+            for (Tuple coord : coords) {
+                if (Chessboard.this.isValidField(coord.x, coord.y)) {
+                    Chessboard.this.fields[getRowIndex(coord.x)][getColIndex(coord.y)].mark();
+                }
+            }
+        }
+
+        public void unmarkReachableFields() {
+            ArrayList<Tuple> coords = getReachableCoords();
+
+            for (Tuple coord : coords) {
+                if (Chessboard.this.isValidField(coord.x, coord.y)) {
+                    Chessboard.this.fields[getRowIndex(coord.x)][getColIndex(coord.y)].unmark();
+                }
+            }
+        }
+    }
+
+    /**
+     * Queen class
+     */
+    public class Queen extends Chesspiece {
+        public Queen(char color) {
+            super(color, 'Q');
+        }
+
+        private ArrayList<Tuple> getReachableCoords() {
+            ArrayList<Tuple> coords = new ArrayList<Tuple>();
+
+            for (int i = 1; i <= NUMBER_OF_COLUMNS - this.column; i++) {
+                coords.add(new Tuple((char)(this.row + i), (byte)(this.column - i)));
+                coords.add(new Tuple((char)(this.row + i), (byte)(this.column + i)));
+            }
+
+            for (int i = 1; i <= this.column + 1; i++) {
+                coords.add(new Tuple((char)(this.row - i), (byte)(this.column - i)));
+                coords.add(new Tuple((char)(this.row - i), (byte)(this.column + i)));
+            }
+
+            return coords;
+        }
+
+        public void markReachableFields() {
+            ArrayList<Tuple> coords = getReachableCoords();
+
+            for (Tuple coord : coords) {
+                if (Chessboard.this.isValidField(coord.x, coord.y)) {
+                    Chessboard.this.fields[getRowIndex(coord.x)][getColIndex(coord.y)].mark();
+                }
+            }
+
+            int r = row - FIRST_ROW;
+            int c = column - FIRST_COLUMN;
+
+            for (Field[] row : Chessboard.this.fields) {
+                row[c].mark();
+            }
+
+            for (Field column : Chessboard.this.fields[r]) {
+                column.mark();
+            }
+        }
+
+        public void unmarkReachableFields() {
+            ArrayList<Tuple> coords = getReachableCoords();
+
+            for (Tuple coord : coords) {
+                if (Chessboard.this.isValidField(coord.x, coord.y)) {
+                    Chessboard.this.fields[getRowIndex(coord.x)][getColIndex(coord.y)].unmark();
+                }
+            }
+
+            int r = row - FIRST_ROW;
+            int c = column - FIRST_COLUMN;
+
+            for (Field[] row : Chessboard.this.fields) {
+                row[c].unmark();
+            }
+
+            for (Field column : Chessboard.this.fields[r]) {
+                column.unmark();
+            }
+        }
+    }
+
+    /**
+     * King class
+     */
+    public class King extends Chesspiece {
+        public King(char color) {
+            super(color, 'K');
+        }
+
+        private Tuple[] getReachableCoords() {
+            Tuple[] coords = new Tuple[4];
+            coords[0] = new Tuple(this.row, (byte)(this.column - 1));
+            coords[1] = new Tuple(this.row, (byte)(this.column + 1));
+            coords[2] = new Tuple((char)(this.row + 1), this.column);
+            coords[3] = new Tuple((char)(this.row - 1), this.column);
+            return coords;
+        }
+
+        public void markReachableFields() {
+            Tuple[] coords = getReachableCoords();
+
+            for (Tuple coord : coords) {
+                if (Chessboard.this.isValidField(coord.x, coord.y)) {
+                    Chessboard.this.fields[getRowIndex(coord.x)][getColIndex(coord.y)].mark();
+                }
+            }
+        }
+
+        public void unmarkReachableFields() {
+            Tuple[] coords = getReachableCoords();
+
+            for (Tuple coord : coords) {
+                if (Chessboard.this.isValidField(coord.x, coord.y)) {
+                    Chessboard.this.fields[getRowIndex(coord.x)][getColIndex(coord.y)].unmark();
+                }
+            }
+        }
+    }
 }
