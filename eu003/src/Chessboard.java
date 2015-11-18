@@ -4,6 +4,26 @@ import java.util.Arrays;
  * Created by eschmar on 18/11/15.
  */
 public class Chessboard {
+    public static void main(String[] args) {
+        System.out.println("CHESSBOARD\n");
+        Chessboard board = new Chessboard();
+        board.run(args);
+
+        System.out.println(board);
+    }
+
+    public void run(String[] args) {
+        Pawn pawn = new Pawn('w');
+        byte column = 2;
+
+        try {
+            pawn.moveTo('a', column);
+        }catch (Exception e) {
+            //TODO
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static class Field {
         private char row;
         private byte column;
@@ -35,6 +55,7 @@ public class Chessboard {
 
         @Override
         public String toString() {
+            //return "" + row + column;
             String s = (marked) ? "xx" : "--";
             return (piece == null) ? s : piece.toString();
         }
@@ -44,13 +65,14 @@ public class Chessboard {
     public static final int NUMBER_OF_COLUMNS = 8;
 
     public static final int FIRST_ROW = 'a';
-    public static final int FIRST_COLUMN = '1';
+    public static final int FIRST_COLUMN = 1;
 
     private Field[][] fields;
 
     public Chessboard() {
         fields = new Field[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
-        char row = 0;byte column = 0;
+        char row = 0;
+        byte column = 0;
 
         for (int r = 0; r < NUMBER_OF_ROWS; r++) {
             row = (char) (FIRST_ROW + r);
@@ -69,7 +91,7 @@ public class Chessboard {
 
         for (Field[] row : fields) {
             for (Field column : row) {
-                result += column + " ";
+                result += column.toString() + " ";
             }
 
             result += "\n";
@@ -79,7 +101,8 @@ public class Chessboard {
     }
 
     public boolean isValidField(char row, byte column) {
-        if (row > 0 && row <= NUMBER_OF_ROWS && column > 0 && column <= NUMBER_OF_COLUMNS) {
+        char lastRow = (char)(FIRST_ROW + (NUMBER_OF_ROWS - 1));
+        if (row >= FIRST_ROW && row <= lastRow && column > 0 && column <= NUMBER_OF_COLUMNS) {
             return true;
         }
 
@@ -143,8 +166,8 @@ public class Chessboard {
     }
 
     public class Pawn extends Chesspiece {
-        public Pawn(char color, char name) {
-            super(color, name);
+        public Pawn(char color) {
+            super(color, 'P');
         }
 
         public void markReachableFields() {
@@ -165,4 +188,10 @@ public class Chessboard {
             }
         }
     }
+
+    public class Rook extends Chesspiece {}
+    public class Knight extends Chesspiece {}
+    public class Bishop extends Chesspiece {}
+    public class Queen extends Chesspiece {}
+    public class King extends Chesspiece {}
 }
