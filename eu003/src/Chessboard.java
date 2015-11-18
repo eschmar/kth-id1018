@@ -1,90 +1,63 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Created by eschmar on 18/11/15.
  */
 public class Chessboard {
     public static void main(String[] args) {
-        System.out.println("CHESSBOARD\n");
+        System.out.println("CHESSBOARD:");
         Chessboard board = new Chessboard();
         board.run(args);
     }
 
     public void run(String[] args) {
         Pawn pawn = new Pawn('w');
-        byte column = 2;
-
-        try {
-            pawn.moveTo('a', column);
-            pawn.markReachableFields();
-            log("Pawn:");
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        pawn.unmarkReachableFields();
-
         Rook rook = new Rook('b');
-        try {
-            rook.moveTo('c', column);
-            rook.markReachableFields();
-            log("Rook:");
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        rook.unmarkReachableFields();
-
         Knight knight = new Knight('w');
-        column = 1;
-        try {
-            knight.moveTo('d', column);
-            knight.markReachableFields();
-            log("Knight:");
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        knight.unmarkReachableFields();
-
         Bishop bishop = new Bishop('w');
-        column = 4;
-        try {
-            bishop.moveTo('g', column);
-            bishop.markReachableFields();
-            log("Bishop:");
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        bishop.unmarkReachableFields();
-
-        Queen queen = new Queen('w');
-        column = 4;
-        try {
-            queen.moveTo('a', column);
-            queen.markReachableFields();
-            log("Queen:");
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        queen.unmarkReachableFields();
-
+        Queen queen = new Queen('b');
         King king = new King('w');
-        column = 6;
+
         try {
-            king.moveTo('f', column);
-            king.markReachableFields();
-            log("King:");
-        }catch (Exception e) {
+            pawn.moveTo('a', (byte)2);
+            rook.moveTo('c', (byte)5);
+            knight.moveTo('d', (byte)3);
+            bishop.moveTo('g', (byte)4);
+            queen.moveTo('a', (byte)7);
+            king.moveTo('f', (byte)4);
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        king.unmarkReachableFields();
+        log();
+    }
 
-        log("Final:");
+    private Random rand = new Random();
+
+    /**
+     * Moves every piece in the list on the board,
+     * marks its possible next steps and finally
+     * removes it again.
+     * @param pieces
+     */
+    public void presentPieces(Chesspiece[] pieces) {
+        for (Chesspiece piece : pieces) {
+            try {
+                char row = (char)(FIRST_ROW + rand.nextInt(NUMBER_OF_ROWS-1));
+                byte column = (byte)(rand.nextInt(NUMBER_OF_COLUMNS-1)+1);
+                piece.moveTo(row, column);
+                piece.markReachableFields();
+                log();
+            }catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            piece.unmarkReachableFields();
+            piece.moveOut();
+        }
     }
 
     public void log() {
@@ -159,14 +132,22 @@ public class Chessboard {
 
     @Override
     public String toString() {
-        String result = "";
+        String result = "\n ";
+        for (int i = 1; i <= NUMBER_OF_COLUMNS; i++) {
+            result += "  " + i;
+        }
 
+        result += "\n";
+
+        char r = FIRST_ROW;
         for (Field[] row : fields) {
+            result += r + "  ";
             for (Field column : row) {
                 result += column.toString() + " ";
             }
 
             result += "\n";
+            r = (char)(r+1);
         }
 
         return result;
@@ -229,6 +210,9 @@ public class Chessboard {
         }
 
         public void moveOut() {
+            int r = this.row - FIRST_ROW;
+            int c = this.column - FIRST_COLUMN;
+            Chessboard.this.fields[r][c].take();
             this.row = 0;
             this.column = -1;
         }
@@ -379,14 +363,14 @@ public class Chessboard {
         private ArrayList<Tuple> getReachableCoords() {
             ArrayList<Tuple> coords = new ArrayList<Tuple>();
 
-            for (int i = 1; i <= NUMBER_OF_COLUMNS - this.column; i++) {
-                coords.add(new Tuple((char)(this.row + i), (byte)(this.column - i)));
+            for (int i = 1; i <= NUMBER_OF_COLUMNS; i++) {
                 coords.add(new Tuple((char)(this.row + i), (byte)(this.column + i)));
+                coords.add(new Tuple((char)(this.row - i), (byte)(this.column + i)));
             }
 
-            for (int i = 1; i <= this.column + 1; i++) {
+            for (int i = 1; i <= NUMBER_OF_COLUMNS; i++) {
                 coords.add(new Tuple((char)(this.row - i), (byte)(this.column - i)));
-                coords.add(new Tuple((char)(this.row - i), (byte)(this.column + i)));
+                coords.add(new Tuple((char)(this.row + i), (byte)(this.column - i)));
             }
 
             return coords;
@@ -424,14 +408,14 @@ public class Chessboard {
         private ArrayList<Tuple> getReachableCoords() {
             ArrayList<Tuple> coords = new ArrayList<Tuple>();
 
-            for (int i = 1; i <= NUMBER_OF_COLUMNS - this.column; i++) {
-                coords.add(new Tuple((char)(this.row + i), (byte)(this.column - i)));
+            for (int i = 1; i <= NUMBER_OF_COLUMNS; i++) {
                 coords.add(new Tuple((char)(this.row + i), (byte)(this.column + i)));
+                coords.add(new Tuple((char)(this.row - i), (byte)(this.column + i)));
             }
 
-            for (int i = 1; i <= this.column + 1; i++) {
+            for (int i = 1; i <= NUMBER_OF_COLUMNS; i++) {
                 coords.add(new Tuple((char)(this.row - i), (byte)(this.column - i)));
-                coords.add(new Tuple((char)(this.row - i), (byte)(this.column + i)));
+                coords.add(new Tuple((char)(this.row + i), (byte)(this.column - i)));
             }
 
             return coords;
