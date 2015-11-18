@@ -11,23 +11,26 @@ public class Chessboard {
         private boolean marked = false;
 
         public Field(char row, byte column) {
-
+            this.row = row;
+            this.column = column;
         }
 
         public void put(Chesspiece piece) {
-
+            this.piece = piece;
         }
 
-        public Chesspiese take() {
-
+        public Chesspiece take() {
+            Chesspiece temp = this.piece;
+            this.piece = null;
+            return temp;
         }
 
         public void mark() {
-
+            this.marked = true;
         }
 
         public void unmark(){
-
+            this.marked = false;
         }
 
         @Override
@@ -46,7 +49,7 @@ public class Chessboard {
     private Field[][] fields;
 
     public Chessboard() {
-        fields = new Field[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
+        fields = new Field[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
         char row = 0;byte column = 0;
 
         for (int r = 0; r < NUMBER_OF_ROWS; r++) {
@@ -62,13 +65,25 @@ public class Chessboard {
 
     @Override
     public String toString() {
-        return "Chessboard{" +
-                "fields=" + Arrays.toString(fields) +
-                '}';
+        String result = "";
+
+        for (Field[] row : fields) {
+            for (Field column : row) {
+                result += column + " ";
+            }
+
+            result += "\n";
+        }
+
+        return result;
     }
 
     public boolean isValidField(char row, byte column) {
+        if (row > 0 && row <= NUMBER_OF_ROWS && column > 0 && column <= NUMBER_OF_COLUMNS) {
+            return true;
+        }
 
+        return false;
     }
 
     public abstract class Chesspiece {
@@ -92,7 +107,8 @@ public class Chessboard {
         protected byte column = -1;
 
         protected Chesspiece(char color, char name) {
-
+            this.color = color;
+            this.name = name;
         }
 
         @Override
@@ -118,7 +134,8 @@ public class Chessboard {
         }
 
         public void moveOut() {
-
+            this.row = 0;
+            this.column = -1;
         }
 
         public abstract void markReachableFields();
