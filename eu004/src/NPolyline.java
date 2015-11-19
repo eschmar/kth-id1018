@@ -114,11 +114,8 @@ public class NPolyline implements Polyline {
         Iterator<Point> iterator = iterator();
         Point current = iterator.next();
         while (current.getName() != vertexName) {
-            System.out.println(current);
             current = iterator.next();
         }
-
-        System.out.println(current);
 
         iterator.remove();
     }
