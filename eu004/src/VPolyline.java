@@ -121,5 +121,20 @@ public class VPolyline implements Polyline {
     }
 
     public Iterator<Point> iterator() {
+        return new Iterator<Point>() {
+            private int pos = 0;
+
+            public boolean hasNext() {
+                return vertices.length > pos;
+            }
+
+            public Point next() {
+                return vertices[pos++];
+            }
+
+            public void remove() {
+                //TODO
+            }
+        };
     }
 }

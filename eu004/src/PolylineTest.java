@@ -1,4 +1,5 @@
 import java.io.PrintWriter;
+import java.util.Iterator;
 
 /**
  * Created by eschmar on 19/11/15.
@@ -28,7 +29,7 @@ public class PolylineTest {
         nLine.add(p4);
         vLine.add(p4);
 
-        out.println("Point 'X' added");
+        out.println("\nPoint 'X' added");
         out.println(nLine);
         out.println(vLine);
 
@@ -36,7 +37,7 @@ public class PolylineTest {
         nLine.insertBefore(p5, "C");
         vLine.insertBefore(p5, "C");
 
-        out.println("Point 'Y' inserted before 'C'");
+        out.println("\nPoint 'Y' inserted before 'C'");
         out.println(nLine);
         out.println(vLine);
 
@@ -44,20 +45,22 @@ public class PolylineTest {
         nLine.remove("C");
         vLine.remove("C");
 
-        out.println("Remove 'C'");
+        out.println("\nRemove 'C'");
         out.println(nLine);
         out.println(vLine);
 
         // iterator
-//        out.println("Iterator");
-//        for (Point vertex : nLine) {
-//            out.print(vertex);
-//        }
-//        out.println("\n");
-//
-//        for (Point vertex : vLine) {
-//            out.print(vertex);
-//        }
-//        out.println("\n");
+        out.println("\nIterator");
+        for (Point vertex : nLine) {
+            out.print(vertex);
+        }
+        out.println();
+
+        for (Point vertex : vLine) {
+            out.print(vertex);
+        }
+        out.println("\n");
+        out.println("end.");
+
     }
 }

@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by eschmar on 18/11/15.
@@ -110,15 +111,43 @@ public class NPolyline implements Polyline {
 
     @Override
     public void remove(String vertexName) {
-        Node current = vertices;
-        while (current.nextNode != null && current.nextNode.vertex.getName() != vertexName) {
-            current = current.nextNode;
+        Iterator<Point> iterator = iterator();
+        Point current = iterator.next();
+        while (current.getName() != vertexName) {
+            System.out.println(current);
+            current = iterator.next();
         }
 
-        current.nextNode = current.nextNode.nextNode;
+        System.out.println(current);
+
+        iterator.remove();
     }
 
     @Override
     public Iterator<Point> iterator() {
+        return new Iterator<Point>() {
+            private Node prePrevious = null;
+            private Node previous = null;
+            private Node current = vertices;
+
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("Reached the end.");
+                }
+
+                prePrevious = previous;
+                previous = current;
+                current = current.nextNode != null ? current.nextNode : null;
+                return previous.vertex;
+            }
+
+            public void remove() {
+                prePrevious.nextNode = current;
+            }
+        };
     }
 }
