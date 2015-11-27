@@ -9,6 +9,6 @@ OU = Mandatory Exercise, EU = Extra Exercise
 - [x] EU 001
 - [x] EU 002 (\*theoretical)
 - [x] EU 003
-- [ ] EU 004
+- [x] EU 004
 
 \*theoretical = only has a theoretical part and is therefor not included in this repository.
